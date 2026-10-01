@@ -15,6 +15,11 @@ const client = new Client({
         clientId: "masood-ai"
     }),
     puppeteer: {
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    }
+});
+    puppeteer: {
         headless: false
     }
 });
