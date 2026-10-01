@@ -54,6 +54,28 @@ client.on("qr", async (qr) => {
     console.log("QR code is available on the web page.");
 });
 
+app.get("/pair", async (req, res) => {
+    try {
+        const phoneNumber = req.query.phone;
+
+        if (!phoneNumber) {
+            return res.status(400).send("Use /pair?phone=923XXXXXXXXX");
+        }
+
+        const code = await client.requestPairingCode(phoneNumber);
+
+        console.log("WhatsApp pairing code:", code);
+
+        res.send(`
+            <h2>WhatsApp Pairing Code</h2>
+            <h1>${code}</h1>
+            <p>Enter this code in WhatsApp on your phone.</p>
+        `);
+    } catch (error) {
+        console.error("Pairing code error:", error);
+        res.status(500).send("Could not generate pairing code.");
+    }
+});
 client.on("authenticated", () => {
     console.log("WhatsApp authenticated successfully.");
 });
@@ -81,6 +103,9 @@ client.on("message_create", async (message) => {
 console.log("ID:", message.id);
     console.log("Message:", message.body);
     console.log("---------------------------------");
+
+if (!message.body || !message.body.trim()) return;
+
 if (message.fromMe && sentByAI.has(message.body)) {
     sentByAI.delete(message.body);
     return;
