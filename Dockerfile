@@ -28,4 +28,4 @@ USER 1000:1000
 
 EXPOSE 8080
 
-CMD ["xvfb-run", "-a", "node", "whatsapp-ai.js"]
+CMD ["node", "whatsapp-ai.js"]
