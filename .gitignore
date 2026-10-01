@@ -1,0 +1,13 @@
+node_modules/
+.wwebjs_auth/
+.wwebjs_cache/
+.env
+memory.json
+Modelfile
+personal_info.txt
+test-ai.js
+whatsapp-ai-backup.js
+whatsapp-ai-before-vercel.js
+whatsapp-test.js
+node
+notepad
