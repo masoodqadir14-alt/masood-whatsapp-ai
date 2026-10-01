@@ -1,8 +1,25 @@
 import pkg from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
+import QRCode from "qrcode";
 
 const API_URL = "https://masood-mobile-ai.vercel.app/api/chat";
 const sentByAI = new Set();
+import express from "express";
+
+const app = express();
+let latestQR = null;
+
+app.get("/", (req, res) => {
+    res.send(`
+        <h2>Masood WhatsApp AI</h2>
+        <p>QR status: ${latestQR ? "QR available" : "Waiting for QR..."}</p>
+        ${latestQR ? `<img src="${latestQR}" style="max-width:400px;">` : ""}
+    `);
+});
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log("QR web server started.");
+});
 async function sendAIMessage(message, text) {
     sentByAI.add(text);
     await message.reply(text);
@@ -21,9 +38,12 @@ const client = new Client({
 });
    
 
-client.on("qr", (qr) => {
+client.on("qr", async (qr) => {
     console.log("Scan this QR code with WhatsApp:");
     qrcode.generate(qr, { small: true });
+
+    latestQR = await QRCode.toDataURL(qr);
+    console.log("QR code is available on the web page.");
 });
 
 client.on("authenticated", () => {
