@@ -19,10 +19,7 @@ const client = new Client({
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
     }
 });
-    puppeteer: {
-        headless: false
-    }
-});
+   
 
 client.on("qr", (qr) => {
     console.log("Scan this QR code with WhatsApp:");
