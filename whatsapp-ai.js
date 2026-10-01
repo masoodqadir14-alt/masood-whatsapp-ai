@@ -8,6 +8,12 @@ import express from "express";
 
 const app = express();
 let latestQR = null;
+app.get("/health", (req, res) => {
+    res.json({
+        online: true,
+        message: "Express server is running"
+    });
+});
 
 app.get("/", (req, res) => {
     res.send(`
