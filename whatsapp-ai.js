@@ -1,3 +1,5 @@
+console.log("MASOOD WHATSAPP AI PROCESS STARTED");
+
 import pkg from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
 import QRCode from "qrcode";
